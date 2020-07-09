@@ -10,5 +10,6 @@ namespace SacramentPlanner.Models
         public int ID { get; set; }
         public string FullName { get; set; }
         public int MeetingID { get; set; }
+        public string Topic { get; set; }
     }
 }
