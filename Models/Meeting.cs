@@ -11,7 +11,7 @@ namespace SacramentPlanner.Models
         public int ID { get; set; }
         [DataType(DataType.Date)]
         [Required]
-        public int Date { get; set; }
+        public DateTime Date { get; set; }
         [Required]
         public string Conductor { get; set; }
         [Range(1, 341)]
