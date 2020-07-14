@@ -36,6 +36,14 @@ namespace SacramentPlanner.Pages.Meetings
                 return Page();
             }
 
+            // TODO
+            // Create the Speakers
+            var speakers = this.HttpContext.Request.Form["Speaker"];
+            foreach (var speaker in speakers)
+            {
+                Console.WriteLine(speaker);
+            }
+
             _context.Meeting.Add(Meeting);
             await _context.SaveChangesAsync();
 
