@@ -32,7 +32,8 @@ namespace SacramentPlanner.Pages.Meetings
             //var meetings = from m in _context.Meeting
             //               select m;
 
-            var meetings = _context.Meeting.Include(m => m.Speakers.Where(x => x.MeetingID == m.ID));
+            var meetings = _context.Meeting.Include(m => m.Speakers);
+
 
             Meetings = await meetings.ToListAsync();
         }

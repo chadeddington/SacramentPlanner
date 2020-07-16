@@ -42,6 +42,7 @@ namespace SacramentPlanner.Pages.Meetings
             var topics = this.HttpContext.Request.Form["Topic"];
 
             var saved = _context.Meeting.Add(Meeting);
+            await _context.SaveChangesAsync();
 
             for (int i = 0; i < speakers.Count; i++)
             {

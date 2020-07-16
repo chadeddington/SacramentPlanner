@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,6 +41,6 @@ namespace SacramentPlanner.Models
         public string ClosingPrayer { get; set; }
 
         /*Navigation Property*/
-        public List<Speaker> Speakers { get; set; }
+        public ICollection<Speaker> Speakers { get; set; }
     }
 }

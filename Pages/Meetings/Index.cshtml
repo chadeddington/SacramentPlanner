@@ -48,9 +48,15 @@
                 @Html.DisplayFor(modelItem => item.OpeningPrayer)
             </td>
 
-            <th>
-                @Html.DisplayFor(modelItem => item.Speakers)
-            </th>
+            <td>
+                <ul>
+                    @foreach (var speaker in item.Speakers)
+                    {
+                        <li>@speaker.FullName</li>
+                    }
+                </ul>
+               
+            </td>
 
             <td>
                 @Html.DisplayFor(modelItem => item.ClosingPrayer)
