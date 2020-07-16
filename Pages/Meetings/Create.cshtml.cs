@@ -39,12 +39,22 @@ namespace SacramentPlanner.Pages.Meetings
             // TODO
             // Create the Speakers
             var speakers = this.HttpContext.Request.Form["Speaker"];
-            foreach (var speaker in speakers)
+            var topics = this.HttpContext.Request.Form["Topic"];
+
+            var saved = _context.Meeting.Add(Meeting);
+
+            for (int i = 0; i < speakers.Count; i++)
             {
-                Console.WriteLine(speaker);
+                Console.WriteLine(speakers[i]);
+                Console.WriteLine(topics[i]);
+
+                Speaker speaker = new Speaker();
+                speaker.FullName = speakers[i];
+                speaker.Topic = topics[i];
+                speaker.MeetingID = saved.Entity.ID;
+                _context.Speaker.Add(speaker);
             }
 
-            _context.Meeting.Add(Meeting);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
