@@ -10,15 +10,18 @@ namespace SacramentPlanner.Models
     public class Meeting
     {
         public int ID { get; set; }
+
         [DataType(DataType.Date)]
         [Required]
         public DateTime Date { get; set; }
+
         [Required]
         public string Conductor { get; set; }
+
         [Range(1, 341)]
         [Display(Name = "Opening Hymn")]
         [Required]
-        public string OpeningHymn { get; set; }
+        public int OpeningHymn { get; set; }
 
         [Display(Name = "Opening Prayer")]
         [Required]
@@ -27,15 +30,16 @@ namespace SacramentPlanner.Models
         [Range(1, 341)]
         [Display(Name = "Sacrament Hymn")]
         [Required]
-        public string SacramentHymn { get; set; }
+        public int SacramentHymn { get; set; }
 
-        [Range(1, 341)]
+        
         [Display(Name = "Intermediate Hymn/Musical Number")]
         public string IntermediateHymn { get; set; }
 
         [Display(Name = "Closing Hymn")]
         [Required]
-        public string ClosingHymn { get; set; }
+        public int ClosingHymn { get; set; }
+
         [Display(Name = "Closing Prayer")]
         [Required]
         public string ClosingPrayer { get; set; }
