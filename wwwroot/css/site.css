@@ -9,9 +9,32 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
-}
 
+  color: royalblue;
+}
+.EDD {
+    color: #08599C;
+    padding: 2px;
+    /*
+    background-color: #99FFC9
+    border-radius: 8px;
+    padding: 5px;
+    */
+}
+    .EDD:hover {
+/*        background-color: #CEDADA; */
+    }
+
+#new-button {
+    color: white;
+    background-color: #08599C;
+    padding: 10px;
+    border-radius: 8px;
+}
+#new-button:hover{
+    background-color:#0812A6;
+    text-decoration:none;
+}
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -59,8 +82,10 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #DDF0F0;
+    margin-bottom: 60px;
 }
 .footer {
   position: absolute;
