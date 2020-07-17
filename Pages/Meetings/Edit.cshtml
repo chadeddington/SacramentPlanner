@@ -43,17 +43,17 @@
                 @for (int i = 0; i < Model.Meeting.Speakers.Count; i++)
                 {
                     int speakerNum = i + 1;
-                <fieldset class="speaker-group">
-                    <legend>Speaker @speakerNum</legend>
-                    <input type="hidden" name="SpeakerID" value="@Model.Meeting.Speakers[i].ID" />
-                    <label for="Speaker@(speakerNum)" class="control-label">Speaker @speakerNum</label>
-                    <input id="Speaker@(speakerNum)" name="Speaker" class="form-control" value="@Model.Meeting.Speakers[i].FullName " />
+                    <fieldset id="fieldset@(speakerNum)" class="speaker-group">
+                        <legend>Speaker @speakerNum</legend>
+                        <input type="hidden" name="SpeakerID" value="@Model.Meeting.Speakers[i].ID" />
+                        <label for="Speaker@(speakerNum)" class="control-label">Speaker @speakerNum</label>
+                        <input id="Speaker@(speakerNum)" name="ExistingSpeaker" class="form-control" value="@Model.Meeting.Speakers[i].FullName " />
 
-                    <label for="Speaker@(speakerNum)Topic" class="control-label">Speaker @speakerNum Topic</label>
-                    <input id="Speaker@(speakerNum)Topic" name="Topic" class="form-control" value="@Model.Meeting.Speakers[i].Topic " />
+                        <label for="Speaker@(speakerNum)Topic" class="control-label">Speaker @speakerNum Topic</label>
+                        <input id="Speaker@(speakerNum)Topic" name="ExistingTopic" class="form-control" value="@Model.Meeting.Speakers[i].Topic " />
 
-                    <button type="button" class="btn btn-danger remove-speaker" onclick="removeSpeaker(event)">Remove Speaker</button>
-                </fieldset>
+                        <button type="button" class="btn btn-danger remove-speaker" onclick="hideSpeaker(event)" data-speaker="@(speakerNum)">Remove Speaker</button>
+                    </fieldset>
                 }
             </div>
             <div class="form-group" id="addSpeakerGroup">
@@ -66,6 +66,11 @@
                     </div>
                 </div>
 
+            </div>
+            <div class="form-group">
+                <label asp-for="Meeting.MusicalNumber" class="control-label"></label>
+                <input asp-for="Meeting.MusicalNumber" class="form-control" />
+                <span asp-validation-for="Meeting.MusicalNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Meeting.IntermediateHymn" class="control-label"></label>

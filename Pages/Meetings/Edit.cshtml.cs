@@ -50,25 +50,42 @@ namespace SacramentPlanner.Pages.Meetings
 
             _context.Attach(Meeting).State = EntityState.Modified;
 
-            var speakers = this.HttpContext.Request.Form["Speaker"];
-            var topics = this.HttpContext.Request.Form["Topic"];
+            var existingSpeakers = this.HttpContext.Request.Form["ExistingSpeaker"];
+            var existingTopics = this.HttpContext.Request.Form["ExistingTopic"];
             var speakerIDs = this.HttpContext.Request.Form["SpeakerID"];
 
-            for (int i = 0; i < speakers.Count; i++)
+            for (int i = 0; i < existingSpeakers.Count; i++)
             {
                 Speaker speaker = new Speaker();
                 speaker.ID = Int32.Parse(speakerIDs[i]);
 
-                // TODO:
-                // If speaker name is empty, do a delete instead of update
-
-                _context.Attach(speaker).State = EntityState.Modified;
-
-                // Do some more work...  
-                speaker.FullName = speakers[i];
-                speaker.Topic = topics[i];
-                speaker.MeetingID = Meeting.ID;            
+                if (existingSpeakers[i].Length == 0)
+                {
+                    _context.Speaker.Remove(speaker);
+                } else
+                {
+                    speaker.FullName = existingSpeakers[i];
+                    speaker.Topic = existingTopics[i];
+                    speaker.MeetingID = Meeting.ID;
+                    _context.Attach(speaker).State = EntityState.Modified;
+                }          
             }
+
+            var newSpeakers = this.HttpContext.Request.Form["Speaker"];
+            var newTopics = this.HttpContext.Request.Form["Topic"];
+
+            if (newSpeakers.Count > 0)
+            {
+                for (int i = 0; i < newSpeakers.Count; i++)
+                {
+                    Speaker speaker = new Speaker();
+                    speaker.FullName = newSpeakers[i];
+                    speaker.Topic = newTopics[i];
+                    speaker.MeetingID = Meeting.ID;
+                    _context.Speaker.Add(speaker);
+                }
+            }
+
 
             try
             {

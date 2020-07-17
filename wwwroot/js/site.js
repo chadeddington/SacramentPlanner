@@ -35,3 +35,18 @@ function removeSpeaker(e) {
     var parent = e.target.parentElement;
     parent.remove();
 }
+
+function hideSpeaker(e) {
+    const speakerNum = e.target.getAttribute('data-speaker');
+    const name = document.querySelector('#Speaker' + speakerNum);
+    const topic = document.querySelector('#Speaker' + speakerNum + 'Topic');
+
+    name.value = "";
+    topic.value = "";
+    const fieldset = document.querySelector('#fieldset' + speakerNum);
+    fieldset.hidden = true;
+    // remove class so next group gets the right number assigned
+    fieldset.classList.remove('speaker-group')
+
+    
+}
