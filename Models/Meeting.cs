@@ -33,8 +33,11 @@ namespace SacramentPlanner.Models
         public int SacramentHymn { get; set; }
 
         
-        [Display(Name = "Intermediate Hymn/Musical Number")]
+        [Display(Name = "Intermediate Hymn")]
         public string IntermediateHymn { get; set; }
+
+        [Display(Name = "Musical Number")]
+        public string MusicalNumber { get; set; }
 
         [Display(Name = "Closing Hymn")]
         [Required]
@@ -45,6 +48,6 @@ namespace SacramentPlanner.Models
         public string ClosingPrayer { get; set; }
 
         /*Navigation Property*/
-        public ICollection<Speaker> Speakers { get; set; }
+        public List<Speaker> Speakers { get; set; }
     }
 }

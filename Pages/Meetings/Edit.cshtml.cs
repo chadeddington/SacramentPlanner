@@ -30,7 +30,7 @@ namespace SacramentPlanner.Pages.Meetings
                 return NotFound();
             }
 
-            Meeting = await _context.Meeting.FirstOrDefaultAsync(m => m.ID == id);
+            Meeting = await _context.Meeting.Include(m => m.Speakers).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Meeting == null)
             {
@@ -49,6 +49,43 @@ namespace SacramentPlanner.Pages.Meetings
             }
 
             _context.Attach(Meeting).State = EntityState.Modified;
+
+            var existingSpeakers = this.HttpContext.Request.Form["ExistingSpeaker"];
+            var existingTopics = this.HttpContext.Request.Form["ExistingTopic"];
+            var speakerIDs = this.HttpContext.Request.Form["SpeakerID"];
+
+            for (int i = 0; i < existingSpeakers.Count; i++)
+            {
+                Speaker speaker = new Speaker();
+                speaker.ID = Int32.Parse(speakerIDs[i]);
+
+                if (existingSpeakers[i].Length == 0)
+                {
+                    _context.Speaker.Remove(speaker);
+                } else
+                {
+                    speaker.FullName = existingSpeakers[i];
+                    speaker.Topic = existingTopics[i];
+                    speaker.MeetingID = Meeting.ID;
+                    _context.Attach(speaker).State = EntityState.Modified;
+                }          
+            }
+
+            var newSpeakers = this.HttpContext.Request.Form["Speaker"];
+            var newTopics = this.HttpContext.Request.Form["Topic"];
+
+            if (newSpeakers.Count > 0)
+            {
+                for (int i = 0; i < newSpeakers.Count; i++)
+                {
+                    Speaker speaker = new Speaker();
+                    speaker.FullName = newSpeakers[i];
+                    speaker.Topic = newTopics[i];
+                    speaker.MeetingID = Meeting.ID;
+                    _context.Speaker.Add(speaker);
+                }
+            }
+
 
             try
             {

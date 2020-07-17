@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace SacramentPlanner.Pages.Meetings
 
         [BindProperty]
         public Meeting Meeting { get; set; }
+        public Collection<Speaker> Speakers { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,7 +31,7 @@ namespace SacramentPlanner.Pages.Meetings
                 return NotFound();
             }
 
-            Meeting = await _context.Meeting.FirstOrDefaultAsync(m => m.ID == id);
+            Meeting = await _context.Meeting.Include(m => m.Speakers).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Meeting == null)
             {
@@ -46,10 +48,13 @@ namespace SacramentPlanner.Pages.Meetings
             }
 
             Meeting = await _context.Meeting.FindAsync(id);
+            var Speakers = await _context.Speaker.Where(s => s.MeetingID == Meeting.ID).ToListAsync();
 
             if (Meeting != null)
             {
                 _context.Meeting.Remove(Meeting);
+                _context.Speaker.RemoveRange(Speakers);
+
                 await _context.SaveChangesAsync();
             }
 
