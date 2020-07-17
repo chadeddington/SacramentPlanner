@@ -30,7 +30,7 @@ namespace SacramentPlanner.Pages.Meetings
                 return NotFound();
             }
 
-            Meeting = await _context.Meeting.FirstOrDefaultAsync(m => m.ID == id);
+            Meeting = await _context.Meeting.Include(m => m.Speakers).FirstOrDefaultAsync(m => m.ID == id);
 
             if (Meeting == null)
             {
@@ -49,6 +49,26 @@ namespace SacramentPlanner.Pages.Meetings
             }
 
             _context.Attach(Meeting).State = EntityState.Modified;
+
+            var speakers = this.HttpContext.Request.Form["Speaker"];
+            var topics = this.HttpContext.Request.Form["Topic"];
+            var speakerIDs = this.HttpContext.Request.Form["SpeakerID"];
+
+            for (int i = 0; i < speakers.Count; i++)
+            {
+                Speaker speaker = new Speaker();
+                speaker.ID = Int32.Parse(speakerIDs[i]);
+
+                // TODO:
+                // If speaker name is empty, do a delete instead of update
+
+                _context.Attach(speaker).State = EntityState.Modified;
+
+                // Do some more work...  
+                speaker.FullName = speakers[i];
+                speaker.Topic = topics[i];
+                speaker.MeetingID = Meeting.ID;            
+            }
 
             try
             {

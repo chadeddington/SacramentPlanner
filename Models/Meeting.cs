@@ -45,6 +45,6 @@ namespace SacramentPlanner.Models
         public string ClosingPrayer { get; set; }
 
         /*Navigation Property*/
-        public ICollection<Speaker> Speakers { get; set; }
+        public List<Speaker> Speakers { get; set; }
     }
 }
